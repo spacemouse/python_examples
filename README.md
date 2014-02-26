@@ -1,4 +1,4 @@
-python_examples
+Towers
 ===============
 
-These are just some code examples to show I can understand python.
+A simple towers of hanoi game implementation.

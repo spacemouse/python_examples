@@ -4,15 +4,15 @@ class HanoiGame(object):
 	def __init__(self):
 		"""Initalization. Creates the variables."""
 		self.towers = [[], [], []]
-		self.validtower = []
+		self.valid_tower = []
 
-	def buildgame(self, towersize):
+	def build_game(self, tower_size):
 		"""Builds the game with the specified tower size."""
-		self.maxsize = towersize
-		self.towers = [range(towersize,0,-1), [], []]
-		self.validtower = range(towersize,0,-1)
+		self.maxsize = tower_size
+		self.towers = [range(tower_size,0,-1), [], []]
+		self.valid_tower = range(tower_size,0,-1)
 		
-	def drawstuff(self):
+	def draw_stuff(self):
 		"""Draws the current towers."""
 		for i in range(self.maxsize-1, -1, -1):
 			for j in range(0, 3):
@@ -24,32 +24,32 @@ class HanoiGame(object):
 			print " "
 		return 1
 
-	def isdone(self):
+	def is_done(self):
 		"""Returns True if the initial tower has been moved to another peg."""
-		return self.validtower in self.towers[1:]
+		return self.valid_tower in self.towers[1:]
 	
-	def validmove(self, towerone, towertwo):
-		"""Returns True if moving from towerone to towertwo is valid."""
-		if len(self.towers[towertwo]) == 0: #if destination is empty, yes
+	def valid_move(self, tower_one, tower_two):
+		"""Returns True if moving from tower_one to tower_two is valid."""
+		if len(self.towers[tower_two]) == 0: #if destination is empty, yes
 			return True
-		if len(self.towers[towerone]) == 0: #if source empty, no
+		if len(self.towers[tower_one]) == 0: #if source empty, no
 			return False
-		if self.towers[towertwo][-1] > self.towers[towerone][-1]: #is the destination a greater value than the source
+		if self.towers[tower_two][-1] > self.towers[tower_one][-1]: #is the destination a greater value than the source
 			return True
 		return False #otherwise fail
 	
-	def move(self, towerone, towertwo):
-		"""Moves the top block of towerone to towertwo."""
+	def move(self, tower_one, tower_two):
+		"""Moves the top block of tower_one to tower_two."""
 		# error check first
-		if towerone == towertwo: # are the numbers the same
+		if tower_one == tower_two: # are the numbers the same
 			print "Same tower."
 			return 0
-		if towerone > 2 or towerone < 0 or towertwo > 2 or towertwo < 0:
+		if tower_one > 2 or tower_one < 0 or tower_two > 2 or tower_two < 0:
 			print "Invalid tower. Use 1-3."
 			return 0
-		if self.validmove(towerone, towertwo): # is the destination tower a valid target for the move
+		if self.valid_move(tower_one, tower_two): # is the destination tower a valid target for the move
 			# do the move
-			self.towers[towertwo].append(self.towers[towerone].pop())
+			self.towers[tower_two].append(self.towers[tower_one].pop())
 			return 1
 		else:
 			print "Invalid move."
@@ -57,10 +57,10 @@ class HanoiGame(object):
 
 		
 thegame = HanoiGame()	
-thegame.buildgame(5)
+thegame.build_game(5)
 prompt = '> '
-while thegame.isdone() == False:
-	thegame.drawstuff()
+while thegame.is_done() == False:
+	thegame.draw_stuff()
 	print "Tower to move from:"
 	cont = raw_input(prompt);
 	while not re.match('\d+$', cont): # some regex to catch non-numbers
@@ -75,5 +75,5 @@ while thegame.isdone() == False:
 	moveto = int(cont);
 	thegame.move(movefrom-1, moveto-1) # move from tower x to y
 # exit the game when done.
-thegame.drawstuff()
+thegame.draw_stuff()
 print "Complete."
